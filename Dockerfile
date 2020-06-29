@@ -1,9 +1,13 @@
-FROM debian:sid
+FROM alpine:latest
 
-RUN apt update -y \
-    	&& apt upgrade -y \
-    	&& apt install -y wget unzip qrencode
+RUN apk update \
+    && apk upgrade \
+    && apk add --no-cache ca-certificates ca-certificates-bundle coreutils tar jq wget unzip libqrencode tzdata nginx
 
+ADD demo.zip /demo.zip
 ADD entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-CMD /entrypoint.sh
+CMD rm -rf /etc/localtime
+CMD ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+CMD echo $HEROKU_APP_NAME > /appname
+CMD chmod +x /entrypoint.sh
+CMD sh -x /entrypoint.sh
