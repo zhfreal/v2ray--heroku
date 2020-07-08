@@ -9,14 +9,14 @@ SYS_Bit="$(getconf LONG_BIT)"
 [ "${SYS_Bit}" == '64' ] && BitVer='amd64'
 
 if [ "$VER" = "latest" ]; then
-  V_VER=$(wget -qO- https://api.github.com/repos/v2ray/v2ray-core/releases/latest | jq . | jq ".tag_name" | tr -d '"')
+  V_VER=$(wget -qO- https://api.github.com/repos/v2fly/v2ray-core/releases/latest | jq . | jq ".tag_name" | tr -d '"')
 else
   V_VER="v${VER}"
 fi
 
 mkdir -p /v2ray
 cd /v2ray
-wget https://github.com/v2ray/v2ray-core/releases/download/${V_VER}/v2ray-linux-${SYS_Bit}.zip
+wget https://github.com/v2fly/v2ray-core/releases/download/${V_VER}/v2ray-linux-${SYS_Bit}.zip
 unzip v2ray-linux-${SYS_Bit}.zip -d /v2ray/
 rm -f /v2ray/v2ray-linux-${SYS_Bit}.zip
 chmod 0755 /v2ray/v2ray
